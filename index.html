@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Stick Avalanche</title>
+      <script src="scripts/game.js"></script>
+      <script src="scripts/grav.js"></script>
+      <script src="scripts/rock.js"></script>
+      <link rel="stylesheet" type="text/css" href="css/style.css">
+  </head>
+  <body>
+    <div id="game"></div>
+    <script>
+    const game = new Game();
+    const rock = new Rock(game);
+    rock.add();
+    setInterval(() => {
+      rock.render(0.1);
+    }, 100);
+    document.getElementById('game').appendChild(rock.element);
+    </script>
+  </body>
+</html>

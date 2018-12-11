@@ -1,0 +1,9 @@
+#game {
+  position: relative;
+  width: 600px;
+  height: 400px;
+}
+
+.game-piece { 
+  position: absolute;
+}
