@@ -4,6 +4,10 @@ class Game {
     this._objects = [];
   }
 
+  width() {
+    return this.element.offsetWidth;
+  }
+
   height() {
     return this.element.offsetHeight;
   }
@@ -36,4 +40,28 @@ class GameObject {
   remove() {
     this.game.remove(this);
   }
+
+  y() {
+    // TODO: get element height and use negative of that
+    // as the default Y.
+    const yStr = this.element.style.top || ('-' + this.height().toFixed(1));
+    return parsePxSize(yStr)
+  }
+
+  x() {
+    const xStr = this.element.style.top || '0px';
+    return parsePxSize(xStr);
+  }
+
+  width() {
+    return this.element.offsetWidth;
+  }
+
+  height() {
+    return this.element.offsetHeight;
+  }
+}
+
+function parsePxSize(size) {
+  return parseFloat(size.split('px')[0]);
 }

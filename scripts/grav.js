@@ -15,11 +15,4 @@ class GravObject extends GameObject {
       this.remove();
     }
   }
-
-  y() {
-    // TODO: get element height and use negative of that
-    // as the default Y.
-    const yStr = this.element.style.top || '-100px';
-    return parseFloat(yStr.split('px')[0]);
-  }
 }
