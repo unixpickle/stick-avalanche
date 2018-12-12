@@ -26,6 +26,10 @@ class Game {
     this.element.removeChild(object.element);
     this._objects.splice(index, 1);
   }
+
+  render(time) {
+    this._objects.forEach((x) => x.render(time));
+  }
 }
 
 class GameObject {
@@ -62,6 +66,9 @@ class GameObject {
 
   height() {
     return this.element.offsetHeight;
+  }
+
+  render(time) {
   }
 }
 
