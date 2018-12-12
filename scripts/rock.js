@@ -1,3 +1,5 @@
+const ROCK_TIME = 0.5;
+
 class Rock extends GravObject {
   constructor(game) {
     super(game);
@@ -29,5 +31,27 @@ class Rock extends GravObject {
 
   isRock() {
     return true;
+  }
+}
+
+class RockGenerator {
+  constructor(game) {
+    this.game = game;
+    this.lastTime = 0;
+    this.time = 0;
+  }
+
+  step(time) {
+    this.time += time;
+    if (this.time > this.lastTime + ROCK_TIME) {
+      this.lastTime = this.time;
+      this.generateRock();
+    }
+  }
+
+  generateRock() {
+    const rock = new Rock(this.game);
+    rock.setX(Math.random() * (this.game.width() - rock.width()));
+    this.game.add(rock);
   }
 }

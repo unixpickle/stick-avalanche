@@ -1,8 +1,29 @@
+const ARROW_LEFT = 37;
+const ARROW_RIGHT = 39;
+
 class Game {
   constructor() {
     this.element = document.getElementById('game');
     this.gravState = new GravState();
+    this.rockGenerator = new RockGenerator(this);
     this._objects = [];
+    this.arrowPressed = 0;
+    this._setupKeyEvents();
+  }
+
+  _setupKeyEvents() {
+    window.addEventListener('keydown', (e) => {
+      if (e.which === ARROW_LEFT) {
+        this.arrowPressed = -1;
+      } else if (e.which === ARROW_RIGHT) {
+        this.arrowPressed = 1;
+      }
+    });
+    window.addEventListener('keyup', (e) => {
+      if (e.which === ARROW_LEFT || e.which === ARROW_RIGHT) {
+        this.arrowPressed = 0;
+      }
+    });
   }
 
   width() {
@@ -28,7 +49,40 @@ class Game {
   }
 
   render(time) {
-    this._objects.forEach((x) => x.render(time));
+    this._objects.slice().forEach((x) => x.render(time));
+    this.rockGenerator.step(time);
+    this.checkCollisions();
+  }
+
+  checkCollisions() {
+    const player = this.player();
+    const playerX = player.x();
+    const playerY = player.y();
+    const playerWidth = player.width();
+    const playerHeight = player.height();
+    this._objects.forEach((obj) => {
+      if (obj == player) {
+        return;
+      }
+      if (obj.x() > playerX + playerWidth || obj.x() < playerX - obj.width()) {
+        return;
+      }
+      if (obj.y() > playerY + playerHeight || obj.y() < playerY - obj.height()) {
+        return;
+      }
+      this.gameOver();
+    });
+  }
+
+  gameOver() {
+    const player = this.player();
+    this._objects.slice().forEach((x) => x.remove());
+    this.add(player);
+    this.gravState.reset();
+  }
+
+  player() {
+    return this._objects.filter((x) => x instanceof Player)[0];
   }
 }
 

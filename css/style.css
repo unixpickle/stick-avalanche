@@ -1,8 +1,11 @@
 #game {
-  position: relative;
+  position: absolute;
   width: 600px;
   height: 400px;
+  left: calc(50% - 300px);
+  top: calc(50% - 200px);
   overflow: hidden;
+  background-color: #d5d5d5;
 }
 
 .game-piece { 

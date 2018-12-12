@@ -29,6 +29,10 @@ class GravState {
       }
     }
   }
+
+  reset() {
+    this.flag = GRAV_NORMAL;
+  }
 }
 
 class GravObject extends GameObject {
