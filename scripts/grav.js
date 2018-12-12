@@ -1,3 +1,36 @@
+const GRAV_NORMAL = 0;
+const GRAV_INVERSE = 1;
+const GRAV_NO_ROCKS = 2;
+
+class GravState {
+  constructor() {
+    this.flag = GRAV_NORMAL;
+    this.timeLeft = 0;
+  }
+
+  advance(time) {
+    this.timeLeft -= time;
+    if (this.timeLeft <= 0) {
+      this.flag = GRAV_NORMAL;
+      this.timeLeft = 0;
+    }
+  }
+
+  acceleration(obj) {
+    if (this.flag === GRAV_NORMAL) {
+      return obj.acceleration;
+    } else if (this.flag === GRAV_INVERSE) {
+      return -obj.acceleration;
+    } else if (this.flag === GRAV_NO_ROCKS) {
+      if (obj.isRock()) {
+        return -obj.velocity;
+      } else {
+        return obj.acceleration;
+      }
+    }
+  }
+}
+
 class GravObject extends GameObject {
   constructor(game) {
     super(game);
@@ -7,12 +40,15 @@ class GravObject extends GameObject {
   }
 
   render(time) {
-    console.log('y is ' + this.y());
-    this.velocity += time * this.acceleration;
+    this.velocity += time * this.game.gravState.acceleration(this);
     const newY = this.y() + time * this.velocity;
     this.element.style.top = newY.toFixed(5) + 'px';
     if (newY > this.game.height()) {
       this.remove();
     }
+  }
+
+  isRock() {
+    return false;
   }
 }

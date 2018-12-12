@@ -26,4 +26,8 @@ class Rock extends GravObject {
       }
     }
   }
+
+  isRock() {
+    return true;
+  }
 }

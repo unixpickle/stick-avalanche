@@ -1,6 +1,7 @@
 class Game {
   constructor() {
     this.element = document.getElementById('game');
+    this.gravState = new GravState();
     this._objects = [];
   }
 
@@ -33,17 +34,11 @@ class GameObject {
     this.element = null;
   }
 
-  add() {
-    this.game.add(this);
-  }
-
   remove() {
     this.game.remove(this);
   }
 
   y() {
-    // TODO: get element height and use negative of that
-    // as the default Y.
     const yStr = this.element.style.top || ('-' + this.height().toFixed(1));
     return parsePxSize(yStr)
   }

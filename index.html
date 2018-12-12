@@ -13,7 +13,7 @@
     <script>
     const game = new Game();
     const rock = new Rock(game);
-    rock.add();
+    game.add(rock);
     setInterval(() => {
       rock.render(0.1);
     }, 100);
