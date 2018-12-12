@@ -1,4 +1,4 @@
-const ROCK_TIME = 0.5;
+const ROCK_TIME = 0.3;
 
 class Rock extends GravObject {
   constructor(game) {

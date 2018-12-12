@@ -2,6 +2,9 @@ const GRAV_NORMAL = 0;
 const GRAV_INVERSE = 1;
 const GRAV_NO_ROCKS = 2;
 
+const GRAV_MIN_SPEED = 200;
+const GRAV_SPEED_RANGE = 300;
+
 class GravState {
   constructor() {
     this.flag = GRAV_NORMAL;
@@ -40,7 +43,7 @@ class GravObject extends GameObject {
     super(game);
     this.element = null;
     this.velocity = 0;
-    this.acceleration = 50 + 50 * Math.random();
+    this.acceleration = GRAV_MIN_SPEED + GRAV_SPEED_RANGE * Math.random();
   }
 
   render(time) {

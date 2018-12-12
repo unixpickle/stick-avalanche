@@ -1,6 +1,6 @@
-const PLAYER_VELOCITY_DECAY = 0.01;
-const PLAYER_VELOCITY_RATE = 100;
-const PLAYER_BOUNCE_VELOCITY = 50;
+const PLAYER_VELOCITY_DECAY = 0.005;
+const PLAYER_VELOCITY_RATE = 150;
+const PLAYER_BOUNCE_VELOCITY = 20;
 
 class Player extends GameObject {
   constructor(game) {
