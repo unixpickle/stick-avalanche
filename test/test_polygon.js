@@ -17,7 +17,9 @@ function testLineIntersection() {
   const l3 = new Line(p2, p5);
 
   assert(!l1.intersects(l2));
+  assert(!l2.intersects(l1));
   assert(l2.intersects(l3));
+  assert(l3.intersects(l2));
 }
 
 function testPolyContains() {

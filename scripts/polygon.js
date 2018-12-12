@@ -42,6 +42,18 @@ class Line {
     if (solution.y > Math.max(this.p1.y, this.p2.y)) {
       return false;
     }
+    if (solution.x < Math.min(other.p1.x, other.p2.x)) {
+      return false;
+    }
+    if (solution.x > Math.max(other.p1.x, other.p2.x)) {
+      return false;
+    }
+    if (solution.y < Math.min(other.p1.y, other.p2.y)) {
+      return false;
+    }
+    if (solution.y > Math.max(other.p1.y, other.p2.y)) {
+      return false;
+    }
     return true;
   }
 
@@ -119,6 +131,9 @@ function solveSystem(a1, b1, c1, a2, b2, c2) {
 
 // Solve for y in a 2-D sytem of equations.
 function solveSystemY(a1, b1, c1, a2, b2, c2) {
+  if (a1 === 0) {
+    return c1 / b1;
+  }
   const num = (c2 - (a2 * c1) / a1);
   const denom = b2 - (a2 * b1) / a1;
   return num / denom;
