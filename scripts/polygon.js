@@ -12,10 +12,24 @@ class Line {
   }
 
   intersects(other) {
+    // For now, decide that parallel lines never
+    // intersect, even if they're identical.
+    if (this.p1.x === this.p2.x) {
+      if (other.p1.x === other.p2.x) {
+        return false;
+      }
+    } else {
+      const m1 = (this.p1.x - this.p2.x) / (this.p1.y - this.p2.y);
+      const m2 = (other.p1.x - other.p2.x) / (other.p1.y - other.p2.y);
+      if (m1 === m2) {
+        return false;
+      }
+    }
+
     const thisLin = this.linEquation();
     const otherLin = other.linEquation();
     const solution = solveSystem(thisLin.a, thisLin.b, thisLin.c,
-      otherLin.a, otherLine.b, otherLin.c);
+      otherLin.a, otherLin.b, otherLin.c);
     if (solution.x < Math.min(this.p1.x, this.p2.x)) {
       return false;
     }
@@ -49,7 +63,7 @@ class Triangle {
   contains(point) {
     // https://stackoverflow.com/questions/2049582/how-to-determine-if-a-point-is-in-a-2d-triangle
     const solution = solveSystem(this.p2.x - this.p1.x, this.p3.x - this.p1.x, point.x - this.p1.x,
-      this.p2.x - this.p1.x, this.p3.x - this.p1.x, point.x - this.p1.x);
+      this.p2.y - this.p1.y, this.p3.y - this.p1.y, point.y - this.p1.y);
     return (solution.x >= 0 && solution.x <= 1 && solution.y >= 0 && solution.y <= 1 &&
       solution.x + solution.y <= 1);
   }
@@ -98,14 +112,23 @@ class Polygon {
 
 function solveSystem(a1, b1, c1, a2, b2, c2) {
   return {
-    x: solveSystemX(a1, b1, c1, a2, b2, c2),
-    y: solveSystemX(b1, a1, c1, b2, a2, c2),
+    y: solveSystemY(a1, b1, c1, a2, b2, c2),
+    x: solveSystemY(b1, a1, c1, b2, a2, c2),
   };
 }
 
-// Solve for x in a 2-D sytem of equations.
-function solveSystemX(a1, b1, c1, a2, b2, c2) {
+// Solve for y in a 2-D sytem of equations.
+function solveSystemY(a1, b1, c1, a2, b2, c2) {
   const num = (c2 - (a2 * c1) / a1);
   const denom = b2 - (a2 * b1) / a1;
   return num / denom;
+}
+
+if ('undefined' !== typeof module) {
+  module.exports = {
+    Point: Point,
+    Line: Line,
+    Polygon: Polygon,
+    solveSystem: solveSystem,
+  }
 }
