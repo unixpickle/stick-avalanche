@@ -38,14 +38,22 @@ class GameObject {
     this.game.remove(this);
   }
 
+  x() {
+    const xStr = this.element.style.left || '0px';
+    return parsePxSize(xStr);
+  }
+
+  setX(x) {
+    this.element.style.left = x.toFixed(5) + 'px';
+  }
+
   y() {
     const yStr = this.element.style.top || ('-' + this.height().toFixed(1));
     return parsePxSize(yStr)
   }
 
-  x() {
-    const xStr = this.element.style.top || '0px';
-    return parsePxSize(xStr);
+  setY(y) {
+    this.element.style.top = y.toFixed(5) + 'px';
   }
 
   width() {
