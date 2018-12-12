@@ -56,21 +56,15 @@ class Game {
 
   checkCollisions() {
     const player = this.player();
-    const playerX = player.x();
-    const playerY = player.y();
-    const playerWidth = player.width();
-    const playerHeight = player.height();
+    const playerBounds = player.bounds();
     this._objects.forEach((obj) => {
       if (obj == player) {
         return;
       }
-      if (obj.x() > playerX + playerWidth || obj.x() < playerX - obj.width()) {
-        return;
+      const bounds = obj.bounds();
+      if (bounds.intersects(playerBounds)) {
+        this.gameOver();
       }
-      if (obj.y() > playerY + playerHeight || obj.y() < playerY - obj.height()) {
-        return;
-      }
-      this.gameOver();
     });
   }
 
@@ -120,6 +114,19 @@ class GameObject {
 
   height() {
     return this.element.offsetHeight;
+  }
+
+  bounds() {
+    const x = this.x();
+    const y = this.y();
+    const width = this.width();
+    const height = this.height();
+    return new Polygon([
+      new Point(x, y),
+      new Point(x + width, y),
+      new Point(x + width, y + height),
+      new Point(x, y + height),
+    ]);
   }
 
   render(time) {
