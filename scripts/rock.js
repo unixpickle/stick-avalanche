@@ -10,6 +10,18 @@ class Rock extends GravObject {
     this.time = 0;
   }
 
+  bounds() {
+    const x = this.x();
+    const y = this.y();
+    const width = this.width();
+    const height = this.height();
+    return new Polygon([
+      new Point(x, y),
+      new Point(x + width / 2, y + height),
+      new Point(x + width, y),
+    ]);
+  }
+
   render(time) {
     super.render(time);
     this.time += time;
