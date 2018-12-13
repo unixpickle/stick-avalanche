@@ -7,6 +7,7 @@
     <script src="scripts/grav.js"></script>
     <script src="scripts/player.js"></script>
     <script src="scripts/polygon.js"></script>
+    <script src="scripts/power_up.js"></script>
     <script src="scripts/rock.js"></script>
     <link rel="stylesheet" type="text/css" href="css/style.css">
   </head>
@@ -14,14 +15,14 @@
     <div id="game"></div>
     <script>
     const game = new Game();
-    const rock = new Rock(game);
+    const pu = new PowerUp(game);
     const player = new Player(game);
-    game.add(rock);
+    pu.setX(100);
+    game.add(pu);
     game.add(player);
     setInterval(() => {
       game.render(1 / 24);
     }, 1000/24);
-    document.getElementById('game').appendChild(rock.element);
     </script>
   </body>
 </html>
