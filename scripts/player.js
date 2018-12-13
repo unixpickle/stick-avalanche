@@ -1,6 +1,5 @@
 const PLAYER_VELOCITY_DECAY = 0.003;
 const PLAYER_VELOCITY_RATE = 150;
-const PLAYER_BOUNCE_VELOCITY = 20;
 
 class Player extends GameObject {
   constructor(game) {
@@ -19,10 +18,10 @@ class Player extends GameObject {
     let newX = this.x() + this.velocity;
     if (newX < 0) {
       newX = 0;
-      this.velocity = PLAYER_BOUNCE_VELOCITY;
+      this.velocity = -this.velocity;
     } else if (newX > this.game.width() - this.width()) {
       newX = this.game.width() - this.width();
-      this.velocity = -PLAYER_BOUNCE_VELOCITY;
+      this.velocity = -this.velocity;
     }
     this.setX(newX);
     this.velocity += this.game.movementDirection() * time * PLAYER_VELOCITY_RATE;
