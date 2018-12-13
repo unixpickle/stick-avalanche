@@ -25,7 +25,7 @@ class Player extends GameObject {
       this.velocity = -PLAYER_BOUNCE_VELOCITY;
     }
     this.setX(newX);
-    this.velocity += this.game.arrowPressed * time * PLAYER_VELOCITY_RATE;
+    this.velocity += this.game.movementDirection() * time * PLAYER_VELOCITY_RATE;
     this.velocity = this.velocity;
     this.velocity *= Math.pow(PLAYER_VELOCITY_DECAY, time);
 

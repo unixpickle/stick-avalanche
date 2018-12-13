@@ -12,7 +12,10 @@ class Game {
     this.puGenerator = new PowerUpGenerator(this);
     this._objects = [];
     this._gameOver = true;
-    this.arrowPressed = 0;
+
+    this._leftPressed = false;
+    this._rightPressed = false;
+
     this.score = 0;
 
     const player = new Player(this);
@@ -24,14 +27,16 @@ class Game {
   _setupKeyEvents() {
     window.addEventListener('keydown', (e) => {
       if (e.which === ARROW_LEFT) {
-        this.arrowPressed = -1;
+        this._leftPressed = true;
       } else if (e.which === ARROW_RIGHT) {
-        this.arrowPressed = 1;
+        this._rightPressed = true;
       }
     });
     window.addEventListener('keyup', (e) => {
-      if (e.which === ARROW_LEFT || e.which === ARROW_RIGHT) {
-        this.arrowPressed = 0;
+      if (e.which === ARROW_LEFT) {
+        this._leftPressed = false;
+      } else if (e.which === ARROW_RIGHT) {
+        this._rightPressed = false;
       } else if (e.which === SPACE && this._gameOver) {
         this.newGame();
       }
@@ -74,6 +79,15 @@ class Game {
 
   invincible() {
     return this.invincibleTimer > 0;
+  }
+
+  movementDirection() {
+    if (this._leftPressed && !this._rightPressed) {
+      return -1;
+    } else if (!this._leftPressed && this._rightPressed) {
+      return 1;
+    }
+    return 0;
   }
 
   checkCollisions() {
