@@ -15,10 +15,7 @@
     <div id="game"></div>
     <script>
     const game = new Game();
-    const pu = new PowerUp(game);
     const player = new Player(game);
-    pu.setX(100);
-    game.add(pu);
     game.add(player);
     setInterval(() => {
       game.render(1 / 24);

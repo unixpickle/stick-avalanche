@@ -7,6 +7,7 @@ const GRAV_SPEED_RANGE = 300;
 
 const GRAV_INVERSE_TIME = 2.0;
 const GRAV_NO_ROCKS_TIME = 3.0;
+const GRAV_NO_ROCKS_RATE = 4;
 
 class GravState {
   constructor() {
@@ -39,7 +40,7 @@ class GravState {
       return -obj.acceleration;
     } else if (this.flag === GRAV_NO_ROCKS) {
       if (obj.isRock()) {
-        return -obj.velocity;
+        return -obj.velocity * GRAV_NO_ROCKS_RATE;
       } else {
         return obj.acceleration;
       }
