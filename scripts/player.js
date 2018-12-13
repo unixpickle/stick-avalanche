@@ -33,6 +33,9 @@ class Player extends GameObject {
     const ctx = this.element.getContext('2d');
     ctx.clearRect(0, 0, this.element.width, this.element.height);
     ctx.strokeStyle = 'black';
+    if (this.game.invincible()) {
+      ctx.strokeStyle = '#999';
+    }
 
     ctx.beginPath();
     ctx.arc(11, 6, 5, 0, Math.PI * 2, false);

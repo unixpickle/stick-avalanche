@@ -3,6 +3,7 @@ const POWER_UP_TIME = 5;
 
 const POWER_UP_INVERSE = 0;
 const POWER_UP_NO_ROCKS = 1;
+const POWER_UP_INVINCIBLE = 2;
 
 class PowerUp extends GravObject {
   constructor(game) {
@@ -12,7 +13,7 @@ class PowerUp extends GravObject {
     this.element.height = POWER_UP_SIZE;
     this.element.className = 'game-piece power-up';
     this.time = 0;
-    this.type = Math.floor(Math.random() * (2 - 0.0001));
+    this.type = Math.floor(Math.random() * (3 - 0.0001));
   }
 
   bounds() {
@@ -29,6 +30,8 @@ class PowerUp extends GravObject {
       ctx.fillStyle = 'yellow';
     } else if (this.type === POWER_UP_NO_ROCKS) {
       ctx.fillStyle = 'green';
+    } else if (this.type === POWER_UP_INVINCIBLE) {
+      ctx.fillStyle = 'orange';
     }
     ctx.clearRect(0, 0, this.element.width, this.element.height);
     ctx.beginPath();
@@ -47,6 +50,8 @@ class PowerUp extends GravObject {
       this.game.gravState.inverse();
     } else if (this.type === POWER_UP_NO_ROCKS) {
       this.game.gravState.noRocks();
+    } else if (this.type === POWER_UP_INVINCIBLE) {
+      this.game.invincibleTimer = Math.random() * 5 + 3;
     }
     this.remove();
   }

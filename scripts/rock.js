@@ -42,7 +42,9 @@ class Rock extends GravObject {
   }
 
   playerCollision() {
-    this.game.gameOver();
+    if (!this.game.invincible()) {
+      this.game.gameOver();
+    }
   }
 
   isRock() {

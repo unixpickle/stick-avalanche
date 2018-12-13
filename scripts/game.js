@@ -5,6 +5,7 @@ class Game {
   constructor() {
     this.element = document.getElementById('game');
     this.gravState = new GravState();
+    this.invincibleTimer = 0;
     this.rockGenerator = new RockGenerator(this);
     this.puGenerator = new PowerUpGenerator(this);
     this._objects = [];
@@ -54,7 +55,12 @@ class Game {
     this.rockGenerator.step(time);
     this.puGenerator.step(time);
     this.gravState.step(time);
+    this.invincibleTimer -= time;
     this.checkCollisions();
+  }
+
+  invincible() {
+    return this.invincibleTimer > 0;
   }
 
   checkCollisions() {
