@@ -53,6 +53,7 @@ class PowerUp extends GravObject {
     } else if (this.type === POWER_UP_INVINCIBLE) {
       this.game.invincibleTimer = Math.random() * 5 + 3;
     }
+    this.game.score += 10;
     this.remove();
   }
 

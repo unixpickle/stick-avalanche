@@ -9,9 +9,9 @@ class Player extends GameObject {
     this.element.className = 'game-piece';
     this.element.width = 22;
     this.element.height = 40;
-    this.setX(100);
+    this.setX(200);
     this.setY(game.height() - 40);
-    this.velocity = 10;
+    this.velocity = 0;
     this.legCounter = 0;
   }
 

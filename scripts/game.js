@@ -1,15 +1,23 @@
 const ARROW_LEFT = 37;
 const ARROW_RIGHT = 39;
+const SPACE = 32;
 
 class Game {
   constructor() {
     this.element = document.getElementById('game');
+    this.gameOverElement = document.getElementById('game-over');
     this.gravState = new GravState();
     this.invincibleTimer = 0;
     this.rockGenerator = new RockGenerator(this);
     this.puGenerator = new PowerUpGenerator(this);
     this._objects = [];
+    this._gameOver = true;
     this.arrowPressed = 0;
+    this.score = 0;
+
+    const player = new Player(this);
+    this.add(player);
+
     this._setupKeyEvents();
   }
 
@@ -24,6 +32,8 @@ class Game {
     window.addEventListener('keyup', (e) => {
       if (e.which === ARROW_LEFT || e.which === ARROW_RIGHT) {
         this.arrowPressed = 0;
+      } else if (e.which === SPACE && this._gameOver) {
+        this.newGame();
       }
     });
   }
@@ -51,12 +61,15 @@ class Game {
   }
 
   render(time) {
-    this._objects.slice().forEach((x) => x.render(time));
-    this.rockGenerator.step(time);
-    this.puGenerator.step(time);
-    this.gravState.step(time);
-    this.invincibleTimer -= time;
-    this.checkCollisions();
+    if (!this._gameOver) {
+      this._objects.slice().forEach((x) => x.render(time));
+      this.rockGenerator.step(time);
+      this.puGenerator.step(time);
+      this.gravState.step(time);
+      this.invincibleTimer -= time;
+      this.checkCollisions();
+      this.score += time;
+    }
   }
 
   invincible() {
@@ -78,10 +91,19 @@ class Game {
   }
 
   gameOver() {
-    const player = this.player();
+    this._gameOver = true;
+    this.gameOverElement.style.display = 'block';
+  }
+
+  newGame() {
+    this.gameOverElement.style.display = 'none';
+    this._gameOver = false;
     this._objects.slice().forEach((x) => x.remove());
+    const player = new Player(this);
     this.add(player);
     this.gravState.reset();
+    this.invincibleTimer = 0;
+    this.score = 0;
   }
 
   player() {
