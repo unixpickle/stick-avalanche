@@ -6,6 +6,7 @@ class Game {
     this.element = document.getElementById('game');
     this.gravState = new GravState();
     this.rockGenerator = new RockGenerator(this);
+    this.puGenerator = new PowerUpGenerator(this);
     this._objects = [];
     this.arrowPressed = 0;
     this._setupKeyEvents();
@@ -51,6 +52,8 @@ class Game {
   render(time) {
     this._objects.slice().forEach((x) => x.render(time));
     this.rockGenerator.step(time);
+    this.puGenerator.step(time);
+    this.gravState.step(time);
     this.checkCollisions();
   }
 
@@ -63,7 +66,7 @@ class Game {
       }
       const bounds = obj.bounds();
       if (bounds.intersects(playerBounds)) {
-        this.gameOver();
+        obj.playerCollision();
       }
     });
   }
@@ -130,6 +133,29 @@ class GameObject {
   }
 
   render(time) {
+  }
+
+  playerCollision() {
+  }
+}
+
+class ObjectGenerator {
+  constructor(game, interval) {
+    this.game = game;
+    this.interval = interval;
+    this.lastTime = 0;
+    this.time = 0;
+  }
+
+  step(time) {
+    this.time += time;
+    if (this.time > this.lastTime + this.interval) {
+      this.lastTime = this.time;
+      this.generate();
+    }
+  }
+
+  generate() {
   }
 }
 

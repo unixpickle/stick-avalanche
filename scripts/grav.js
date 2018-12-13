@@ -5,13 +5,26 @@ const GRAV_NO_ROCKS = 2;
 const GRAV_MIN_SPEED = 200;
 const GRAV_SPEED_RANGE = 300;
 
+const GRAV_INVERSE_TIME = 2.0;
+const GRAV_NO_ROCKS_TIME = 5.0;
+
 class GravState {
   constructor() {
     this.flag = GRAV_NORMAL;
     this.timeLeft = 0;
   }
 
-  advance(time) {
+  inverse() {
+    this.flag = GRAV_INVERSE;
+    this.timeLeft = GRAV_INVERSE_TIME;
+  }
+
+  noRocks() {
+    this.flag = GRAV_NO_ROCKS;
+    this.timeLeft = GRAV_NO_ROCKS_TIME;
+  }
+
+  step(time) {
     this.timeLeft -= time;
     if (this.timeLeft <= 0) {
       this.flag = GRAV_NORMAL;

@@ -41,27 +41,24 @@ class Rock extends GravObject {
     }
   }
 
+  playerCollision() {
+    this.game.gameOver();
+  }
+
   isRock() {
     return true;
   }
 }
 
-class RockGenerator {
+class RockGenerator extends ObjectGenerator {
   constructor(game) {
-    this.game = game;
-    this.lastTime = 0;
-    this.time = 0;
+    super(game, ROCK_TIME);
   }
 
-  step(time) {
-    this.time += time;
-    if (this.time > this.lastTime + ROCK_TIME) {
-      this.lastTime = this.time;
-      this.generateRock();
+  generate() {
+    if (this.game.gravState.flag !== GRAV_NORMAL) {
+      return;
     }
-  }
-
-  generateRock() {
     const rock = new Rock(this.game);
     rock.setX(Math.random() * (this.game.width() - rock.width()));
     this.game.add(rock);

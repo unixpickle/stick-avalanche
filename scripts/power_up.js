@@ -1,4 +1,8 @@
 const POWER_UP_SIZE = 30;
+const POWER_UP_TIME = 5;
+
+const POWER_UP_INVERSE = 0;
+const POWER_UP_NO_ROCKS = 1;
 
 class PowerUp extends GravObject {
   constructor(game) {
@@ -8,6 +12,7 @@ class PowerUp extends GravObject {
     this.element.height = POWER_UP_SIZE;
     this.element.className = 'game-piece power-up';
     this.time = 0;
+    this.type = Math.floor(Math.random() * (2 - 0.0001));
   }
 
   bounds() {
@@ -20,7 +25,11 @@ class PowerUp extends GravObject {
     super.render(time);
     this.time += time;
     const ctx = this.element.getContext('2d');
-    ctx.fillStyle = 'red';
+    if (this.type === POWER_UP_INVERSE) {
+      ctx.fillStyle = 'yellow';
+    } else if (this.type === POWER_UP_NO_ROCKS) {
+      ctx.fillStyle = 'green';
+    }
     ctx.clearRect(0, 0, this.element.width, this.element.height);
     ctx.beginPath();
     this.relativeCorners().forEach((p, i) => {
@@ -29,8 +38,17 @@ class PowerUp extends GravObject {
       } else {
         ctx.lineTo(p.x, p.y);
       }
-    })
+    });
     ctx.fill();
+  }
+
+  playerCollision() {
+    if (this.type === POWER_UP_INVERSE) {
+      this.game.gravState.inverse();
+    } else if (this.type === POWER_UP_NO_ROCKS) {
+      this.game.gravState.noRocks();
+    }
+    this.remove();
   }
 
   relativeCorners() {
@@ -43,5 +61,20 @@ class PowerUp extends GravObject {
       new Point(r + r * Math.cos(angle + 3 * Math.PI / 2),
         r + r * Math.sin(angle + 3 * Math.PI / 2)),
     ];
+  }
+}
+
+class PowerUpGenerator extends ObjectGenerator {
+  constructor(game) {
+    super(game, POWER_UP_TIME);
+  }
+
+  generate() {
+    if (this.game.gravState.flag === GRAV_INVERSE) {
+      return;
+    }
+    const pu = new PowerUp(this.game);
+    pu.setX(Math.random() * (this.game.width() - pu.width()));
+    this.game.add(pu);
   }
 }
