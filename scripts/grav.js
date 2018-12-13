@@ -6,7 +6,7 @@ const GRAV_MIN_SPEED = 200;
 const GRAV_SPEED_RANGE = 300;
 
 const GRAV_INVERSE_TIME = 2.0;
-const GRAV_NO_ROCKS_TIME = 5.0;
+const GRAV_NO_ROCKS_TIME = 3.0;
 
 class GravState {
   constructor() {
