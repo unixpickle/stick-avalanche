@@ -16,12 +16,21 @@
     <div id="game">
       <label id="game-over">Hit Space to Play</label>
     </div>
+    <label id="high-score">High Score: 0</label>
+
     <script>
     const game = new Game();
     const scoreLabel = document.getElementById('score');
+    const highLabel = document.getElementById('high-score');
+    highLabel.textContent = 'High Score: ' + (localStorage.highScore || 0);
     setInterval(() => {
       game.render(1 / 24);
       scoreLabel.textContent = 'Score: ' + Math.floor(game.score);
+      const highScore = parseInt(localStorage.highScore || '0');
+      if (Math.floor(game.score) > highScore) {
+        localStorage.highScore = Math.floor(game.score);
+        highLabel.textContent = 'High Score: ' + localStorage.highScore;
+      }
     }, 1000/24);
     </script>
   </body>

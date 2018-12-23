@@ -1,12 +1,19 @@
-#score {
+#score, #high-score {
   display: block;
   text-align: center;
   position: absolute;
   left: 0;
   width: 100%;
-  top: calc(50% - 250px);
   font-size: 20px;
   font-family: sans-serif;
+}
+
+#score {
+  top: calc(50% - 250px);
+}
+
+#high-score {
+  top: calc(50% + 240px);
 }
 
 #game {
