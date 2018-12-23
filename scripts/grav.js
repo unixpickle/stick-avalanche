@@ -4,6 +4,7 @@ const GRAV_NO_ROCKS = 2;
 
 const GRAV_MIN_SPEED = 200;
 const GRAV_SPEED_RANGE = 300;
+const GRAV_TERMINAL_VEL = 800;
 
 const GRAV_INVERSE_TIME = 2.0;
 const GRAV_NO_ROCKS_TIME = 3.0;
@@ -62,6 +63,9 @@ class GravObject extends GameObject {
 
   render(time) {
     this.velocity += time * this.game.gravState.acceleration(this);
+    if (this.velocity > GRAV_TERMINAL_VEL) {
+      this.velocity = GRAV_TERMINAL_VEL;
+    }
     const newY = this.y() + time * this.velocity;
     this.element.style.top = newY.toFixed(5) + 'px';
     if (newY > this.game.height()) {
